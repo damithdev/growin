@@ -60,8 +60,6 @@ class GrowinAPI{
       var response = await http.get('$_host/user',headers: header);
       int statusCode = response.statusCode;
       if(statusCode==200){
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString("user", json.decode(response.body)['token']);
         return User.fetch(json.decode(response.body));
       }else{
         return User(status: statusCode,error: json.decode(response.body)['error'],field: jsonDecode(response.body)['field']);
@@ -118,6 +116,30 @@ class GrowinAPI{
     }else{
       return false;
     }
+  }
+
+  Future<List<Garden>> getGarden() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.getString("user")!=null){
+      Map<String,String> header = {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString("user")}'
+      };
+      var response = await http.get('$_host/garden',headers: header);
+      int statusCode = response.statusCode;
+      if(statusCode==200){
+        var body = jsonDecode(response.body);
+        return (body as List)
+            .map((p) => Garden.fetch(p))
+            .toList();
+      }else{
+        return null;
+      }
+    }else{
+      return null;
+    }
+
+
   }
 
   @override

@@ -129,11 +129,11 @@ class _OnBoardState extends State<OnBoard> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.all(20.0),
-          child: Image.asset("assets/images/buy.png",alignment: Alignment.bottomCenter,width: double.infinity,height: 400,filterQuality: FilterQuality.high,fit: BoxFit.contain,),
+          child: Image.asset("assets/images/buy.png",alignment: Alignment.bottomCenter,width: double.infinity,height: MediaQuery.of(context).size.height-500,filterQuality: FilterQuality.high,fit: BoxFit.contain,),
         ),
-        SizedBox(height: 20,),
+        SizedBox(height: 0,),
         Padding(
-          padding: const EdgeInsets.only(top: 50,left: 50,right: 50),
+          padding: const EdgeInsets.only(top: 0,left: 50,right: 50),
           child: Column(
             children: <Widget>[
               Text("Buy a Plant",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),textAlign: TextAlign.center,),
@@ -154,11 +154,11 @@ class _OnBoardState extends State<OnBoard> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.all(20.0),
-          child: Image.asset("assets/images/watering.png",alignment: Alignment.bottomCenter,width: double.infinity,height: 400,filterQuality: FilterQuality.high,fit: BoxFit.contain,),
+          child: Image.asset("assets/images/watering.png",alignment: Alignment.bottomCenter,width: double.infinity,height: MediaQuery.of(context).size.height-500,filterQuality: FilterQuality.high,fit: BoxFit.contain,),
         ),
-        SizedBox(height: 20,),
+        SizedBox(height: 0,),
         Padding(
-          padding: const EdgeInsets.only(top: 50,left: 50,right: 50),
+          padding: const EdgeInsets.only(top: 0,left: 50,right: 50),
           child: Column(
             children: <Widget>[
               Text("Take care of your plant everyday",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),textAlign: TextAlign.center,),
@@ -179,11 +179,11 @@ class _OnBoardState extends State<OnBoard> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.all(20.0),
-          child: Image.asset("assets/images/sell.png",alignment: Alignment.bottomCenter,width: double.infinity,height: 400,filterQuality: FilterQuality.high,fit: BoxFit.contain,),
+          child: Image.asset("assets/images/sell.png",alignment: Alignment.bottomCenter,width: double.infinity,height: MediaQuery.of(context).size.height-500,filterQuality: FilterQuality.high,fit: BoxFit.contain,),
         ),
-        SizedBox(height: 20,),
+        SizedBox(height: 0,),
         Padding(
-          padding: const EdgeInsets.only(top: 50,left: 50,right: 50),
+          padding: const EdgeInsets.only(top: 0,left: 50,right: 50),
           child: Column(
             children: <Widget>[
               Text("Sell Back",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),textAlign: TextAlign.center,),

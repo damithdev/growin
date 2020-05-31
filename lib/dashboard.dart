@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growin/core/GWidgets.dart';
 import 'package:growin/core/User.dart';
+import 'package:growin/store.dart';
 
 
 
@@ -26,9 +27,19 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("hello ${user.firstName}");
   }
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  String greeting() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Morning';
+    }
+    if (hour < 17) {
+      return 'Afternoon';
+    }
+    return 'Evening';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +167,7 @@ class _DashboardState extends State<Dashboard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                new Text("Good morinig",style: TextStyle(fontSize: 20,color: Colors.grey[600]),),
+                new Text("Good ${greeting()}",style: TextStyle(fontSize: 20,color: Colors.grey[600]),),
                 SizedBox(height: 5,),
                 new Text("${user.firstName} ${user.lastName}",style: TextStyle(fontSize: 23,fontWeight: FontWeight.w600),),
                 Padding(
@@ -183,6 +194,7 @@ class _DashboardState extends State<Dashboard> {
               child: PrimaryButton(
                 text: "Buy a Plant",
                 onPress: (()=>{
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=>Store()))
 
                 }),
               ),

@@ -8,6 +8,7 @@ import 'package:growin/onBoard.dart';
 
 import 'core/PColors.dart';
 import 'dashboard.dart';
+import 'email_verify.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -21,8 +22,15 @@ class _SplashScreenState extends State<SplashScreen> {
   fetch() async{
     User user = await GrowinAPI().user();
     if(user.createdIn!=null){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (BuildContext context) => Dashboard(user: user)));
+      if(user.isEmailVerified){
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => Dashboard(user: user)),
+              (Route<dynamic> route) => false,
+        );
+      }else{
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>EmailVerify(user: user)));
+      }
     }else{
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) => OnBoard()));
