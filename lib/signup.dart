@@ -31,6 +31,7 @@ class _SignupState extends State<Signup> {
   String errorEmail = null;
   String errorNIC = null;
   String errorPassword = null;
+  String errorMobile = null;
 
   bool loader = false;
 
@@ -60,14 +61,13 @@ class _SignupState extends State<Signup> {
       email: email,
       password: password,
       address: userAddress(country: countryCode),
-      mobileNumber: '$country_no$mobileNumber',
-      nic: countryCode=="LK"?nic:null
+      mobileNumber: '$country_no$mobileNumber'
     ));
     setState(() {
       loader=false;
     });
     if(user.createdIn!=null){
-      if(user.isEmailVerified){
+      if(user.isNumberVerified){
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => Dashboard(user: user)),
@@ -77,10 +77,20 @@ class _SignupState extends State<Signup> {
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>EmailVerify(user: user)));
       }
     }else{
+      print(user.toString());
       if(user.status==409){
-        setState(() {
-          errorEmail = "This email already registerd";
-        });
+        if(user.field==1){
+          setState(() {
+            errorEmail = "This email already registerd";
+            errorMobile = null;
+          });
+        }else{
+          setState(() {
+            errorMobile = "This mobile already registerd";
+            errorEmail=null;
+          });
+        }
+
       }else{
         Scaffold.of(context).showSnackBar(SnackBar(content: Text("Something error. try again")));
       }
@@ -279,55 +289,9 @@ class _SignupState extends State<Signup> {
                         }),
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
+                          errorText: errorMobile,
                           prefixText: country_no,
                           labelText: "Mobile Number *",
-                          labelStyle: TextStyle(
-                            fontSize: 14,
-
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: PColor.primaryColor
-                              )
-                          ),
-                          border: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.grey[300]
-                              )
-                          ),
-
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      TextField(
-                        maxLength: 12,
-                        enabled: countryCode=="LK",
-                        onChanged: ((val){
-                          if(val.length>9){
-                            if(validNIC(val)){
-                              setState(() {
-                                nic=val;
-                                errorNIC = null;
-                              });
-                            }else{
-                              setState(() {
-                                nic="";
-                                errorNIC = "Invalid NIC number";
-                              });
-                            }
-                          }else{
-                            setState(() {
-                              errorNIC = null;
-                              nic="";
-                            });
-                          }
-                        }),
-                        decoration: InputDecoration(
-                          errorText: errorNIC,
-                          helperText: "If you are not sri lankan, avoid this field",
-                          labelText: "National Identity Card number *",
                           labelStyle: TextStyle(
                             fontSize: 14,
 
@@ -404,7 +368,7 @@ class _SignupState extends State<Signup> {
                       PrimaryButton(
                         text: "CREATE ACCOUNT",
                         loading: loader,
-                        onPress: isNotEmpty(firstName)&&isNotEmpty(lastName)&&isNotEmpty(email)&&isNotEmpty(mobileNumber)&&(countryCode!="LK"||isNotEmpty(nic))&&isNotEmpty(password)?()=>{
+                        onPress: isNotEmpty(firstName)&&isNotEmpty(lastName)&&isNotEmpty(email)&&isNotEmpty(mobileNumber)&&isNotEmpty(password)?()=>{
                           request()
                         }:null
 

@@ -21,20 +21,22 @@ class _SplashScreenState extends State<SplashScreen> {
 
   fetch() async{
     User user = await GrowinAPI().user();
-    if(user.createdIn!=null){
-      if(user.isEmailVerified){
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => Dashboard(user: user)),
-              (Route<dynamic> route) => false,
-        );
-      }else{
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>EmailVerify(user: user)));
-      }
-    }else{
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (BuildContext context) => OnBoard()));
-    }
+//    if(user.createdIn!=null){
+//      if(user.isEmailVerified){
+//        Navigator.pushAndRemoveUntil(
+//          context,
+//          MaterialPageRoute(builder: (context) => Dashboard(user: user)),
+//              (Route<dynamic> route) => false,
+//        );
+//      }else{
+//        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>EmailVerify(user: user)));
+//      }
+//    }else{
+//      Navigator.of(context).pushReplacement(MaterialPageRoute(
+//          builder: (BuildContext context) => OnBoard()));
+//    }
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => OnBoard()));
   }
 
   @override

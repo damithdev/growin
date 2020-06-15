@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GrowinAPI{
-  final String _host = "https://growin.api.foxrilla.com";
+//  final String _host = "https://growin.api.foxrilla.com";
+  final String _host = "http://localhost:3000";
 
   Future<User> signUp(User user) async{
     Map<String,String> header = {
@@ -17,7 +18,6 @@ class GrowinAPI{
       "last_name":user.lastName,
       "email":user.email,
       "phone_number":user.mobileNumber,
-      "nic":user.nic,
       "password":user.password,
       "country":user.address.country
     };
@@ -28,7 +28,7 @@ class GrowinAPI{
       prefs.setString("user", json.decode(response.body)['token']);
       return User.fetch(json.decode(response.body));
     }else{
-      return User(status: statusCode,error: json.decode(response.body)['error']);
+      return User(status: statusCode,error: json.decode(response.body)['error'],field: json.decode(response.body)['field']);
     }
   }
 

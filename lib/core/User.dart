@@ -5,7 +5,7 @@ class User{
   final String firstName;
   final String lastName;
   final String email;
-  final bool isEmailVerified;
+  final bool isNumberVerified;
   final String mobileNumber;
   final String nic;
   final String refCode;
@@ -18,7 +18,7 @@ class User{
   final int field;
   final Withdraw withdraw;
 
-  User({this.id, this.firstName, this.lastName, this.email, this.isEmailVerified, this.mobileNumber, this.nic, this.refCode, this.createdIn, this.lastActive,this.password,this.address,this.error,this.field,this.status,this.withdraw});
+  User({this.id, this.firstName, this.lastName, this.email, this.isNumberVerified, this.mobileNumber, this.nic, this.refCode, this.createdIn, this.lastActive,this.password,this.address,this.error,this.field,this.status,this.withdraw});
 
   factory User.fetch(Map<String,dynamic> json){
     return User(
@@ -26,7 +26,7 @@ class User{
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],
-      isEmailVerified: json['email_verification']==1,
+      isNumberVerified: json['mobile_verification']==1,
       mobileNumber: json['phone_number'],
       nic: json['nic'],
       refCode: json['ref_code'],
@@ -40,7 +40,7 @@ class User{
 
   @override
   String toString() {
-    return 'User{id: $id, firstName: $firstName, lastName: $lastName, email: $email, isEmailVerified: $isEmailVerified, mobileNumber: $mobileNumber, nic: $nic, refCode: $refCode, createdIn: $createdIn, lastActive: $lastActive, password: $password, address: $address, error: $error, status: $status, field: $field, withdraw: $withdraw}';
+    return 'User{id: $id, firstName: $firstName, lastName: $lastName, email: $email, isNumberVerified: $isNumberVerified, mobileNumber: $mobileNumber, nic: $nic, refCode: $refCode, createdIn: $createdIn, lastActive: $lastActive, password: $password, address: $address, error: $error, status: $status, field: $field, withdraw: $withdraw}';
   }
 
 

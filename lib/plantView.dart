@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:growin/buy_plant.dart';
 import 'package:growin/core/GWidgets.dart';
 import 'package:growin/core/User.dart';
 
@@ -6,19 +7,25 @@ import 'package:growin/core/User.dart';
 class PlantView extends StatefulWidget {
 
   final Garden garden;
+  final User user;
 
-  const PlantView({Key key, this.garden}) : super(key: key);
+  const PlantView({Key key, this.garden, this.user}) : super(key: key);
+
+
 
 
   @override
-  _PlantViewState createState() => _PlantViewState(garden);
+  _PlantViewState createState() => _PlantViewState(garden,user);
 }
 
 class _PlantViewState extends State<PlantView> {
 
   final Garden garden;
+  final User user;
 
-  _PlantViewState(this.garden);
+  _PlantViewState(this.garden, this.user);
+
+
 
 
   @override
@@ -106,7 +113,7 @@ class _PlantViewState extends State<PlantView> {
                             child: Text(garden.description,style: TextStyle(fontSize: 16,color: Colors.grey[500]),textAlign: TextAlign.center,),
                           ),
                           SizedBox(height: 40,),
-                          Text("${garden.price.toDouble()} Rs",style: TextStyle(fontSize: 27,fontWeight: FontWeight.bold),)
+                          Text("${garden.price.toDouble()}0 LKR",style: TextStyle(fontSize: 27,fontWeight: FontWeight.bold),)
                         ],
                       ),
                     ),
@@ -158,7 +165,7 @@ class _PlantViewState extends State<PlantView> {
                       child: PrimaryButton(
                         text: "Buy now",
                         onPress: ((){
-
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext bcontext)=>BuyPlant(garden: garden,user: user)));
                         }),
                       ),
                     ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growin/core/GrowinApi.dart';
 import 'package:growin/dashboard.dart';
-
+import 'package:quiver/async.dart';
 import 'core/GWidgets.dart';
 import 'core/PColors.dart';
 import 'core/User.dart';
@@ -27,8 +27,31 @@ class _EmailVerifyState extends State<EmailVerify> {
   bool btnLoader = false;
   String _errorOtp = null;
   bool loader = true;
+  int _start = 5;
+  int _current = 5;
+  bool resend = false;
+
 
   _EmailVerifyState(this.user);
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+
+  void startTimer() {
+    CountdownTimer countDownTimer = new CountdownTimer(
+      new Duration(minutes: _start),
+      new Duration(minutes: 1),
+    );
+
+    var sub = countDownTimer.listen(null);
+    sub.onData((duration) {
+      setState(() { _current = _start - duration.elapsed.inSeconds; });
+    });
+
+    sub.onDone(() {
+      print("Done");
+      sub.cancel();
+    });
+  }
 
   otpSender() async{
     setState(() {
@@ -42,7 +65,10 @@ class _EmailVerifyState extends State<EmailVerify> {
     if(isSend){
 
     }else{
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text("Otp code not send, try again")));
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(content: Text("Otp code not send, try again"))
+      );
+
     }
 
   }
@@ -83,6 +109,7 @@ class _EmailVerifyState extends State<EmailVerify> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       body:loader?Center(
         child: SizedBox(
@@ -112,11 +139,11 @@ class _EmailVerifyState extends State<EmailVerify> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Verify your email",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w600),),
+                      Text("Verify your Mobile Number",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w600),),
                       SizedBox(height: 6,),
                       Row(
                         children: <Widget>[
-                          Text("Enter 6 digit code. We sent via email\nto continue.",style: TextStyle(fontSize: 16,color: Colors.grey[500]),)
+                          Text("Enter 6 digit code. We sent via SMS\nto continue.",style: TextStyle(fontSize: 16,color: Colors.grey[500]),)
                         ],
                       ),
                       SizedBox(
@@ -152,18 +179,14 @@ class _EmailVerifyState extends State<EmailVerify> {
                       SizedBox(
                         height: 40,
                       ),
-                      Text("If mail not in inbox Please check in your spam box.",style: TextStyle(fontSize: 16,color: Colors.grey[500]),),
-                      SizedBox(
-                        height: 20,
-                      ),
                       Row(
                         children: <Widget>[
-                          Text("If you still got no mail ?",style: TextStyle(fontSize: 15,color: Colors.grey[500]),),
+                          Text("If you still got no OTP Sms ?",style: TextStyle(fontSize: 15,color: Colors.grey[500]),),
                           InkWell(
                             onTap: ()=>{
                               otpSender()
                             },
-                            child: Text("Resend email",style: TextStyle(color: PColor.primaryColor,fontSize: 15,fontWeight: FontWeight.w600),),
+                            child: Text("Resend OTP",style: TextStyle(color: PColor.primaryColor,fontSize: 15,fontWeight: FontWeight.w600),),
                           )
                         ],
                       ),

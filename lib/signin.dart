@@ -37,7 +37,7 @@ class _SigninState extends State<Signin> {
       btnLoader=false;
     });
     if(user.createdIn!=null){
-      if(user.isEmailVerified){
+      if(user.isNumberVerified){
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => Dashboard(user: user)),

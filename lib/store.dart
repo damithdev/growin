@@ -7,15 +7,25 @@ import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Store extends StatefulWidget {
+  final User user;
+
+  const Store({Key key, this.user}) : super(key: key);
+
   @override
-  _StoreState createState() => _StoreState();
+  _StoreState createState() => _StoreState(user);
 }
 
 class _StoreState extends State<Store> {
 
+  final User user;
+
+
+
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   bool loader =true;
   List<Garden> gardenList = [];
+
+  _StoreState(this.user);
 
   void _onRefresh() async{
     List<Garden> glist = await GrowinAPI().getGarden();
@@ -180,7 +190,7 @@ class _StoreState extends State<Store> {
             child: RaisedButton(
               elevation: 0,
               onPressed: ((){
-                Navigator.push(context,MaterialPageRoute(builder: (BuildContext context)=>PlantView(garden: garden)));
+                Navigator.push(context,MaterialPageRoute(builder: (BuildContext context)=>PlantView(garden: garden,user:user)));
               }),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               padding: EdgeInsets.all(0.0),
@@ -243,7 +253,7 @@ class _StoreState extends State<Store> {
                       SizedBox(
                         height: 35,
                       ),
-                      Text("${garden.price.toDouble()} Rs",style: TextStyle(fontSize: 19,fontWeight: FontWeight.w600),)
+                      Text("${garden.price.toDouble()} LKR",style: TextStyle(fontSize: 19,fontWeight: FontWeight.w600),)
                     ],
                   ),
                 ),
