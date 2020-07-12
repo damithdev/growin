@@ -165,7 +165,7 @@ class _PlantViewState extends State<PlantView> {
                       child: PrimaryButton(
                         text: "Buy now",
                         onPress: ((){
-                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext bcontext)=>BuyPlant(garden: garden,user: user)));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext bcontext)=>Checkout(user,garden)));
                         }),
                       ),
                     ),

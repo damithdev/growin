@@ -84,9 +84,9 @@ class PrimaryButton extends StatelessWidget {
 }
 
 
-class PrimaryFloat extends StatelessWidget {
+class SubButton extends StatelessWidget {
 
-  PrimaryFloat({@required this.onPress,this.loading=false,this.icon});
+  SubButton({@required this.text,@required this.onPress,this.loading=false,this.icon});
 
   String text;
   VoidCallback onPress;
@@ -105,16 +105,25 @@ class PrimaryFloat extends StatelessWidget {
         onPressed: onPress,
         child: InkWell(
           child: Container(
+            padding: EdgeInsets.all(this.icon!=null?15:20),
             decoration:BoxDecoration(
-                gradient:onPress!=null?LinearGradient(colors: [Color(0xff25CBA6), Color(0xff44EC96)],
+                gradient:onPress!=null?LinearGradient(colors: [Color(0xffFF5F3C), Color(0xffFD9316)],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 ):null,
                 color: onPress==null?Colors.grey[300]:null,
                 borderRadius: BorderRadius.circular(8.0)
             ),
-            width: 30,
-            child: Text("hello")
+            width: double.infinity,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                this.icon!=null?this.icon:SizedBox(),
+                this.icon!=null?SizedBox(width: 20,):SizedBox(),
+                Text(text,textAlign: TextAlign.center,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.white),),
+              ],
+            ),
           ),
         ),
       );
@@ -136,6 +145,7 @@ class PrimaryFloat extends StatelessWidget {
           color: onPress==null?Colors.grey[300]:null,
           borderRadius: BorderRadius.circular(8.0)
       ),
+      width: double.infinity,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -155,3 +165,4 @@ class PrimaryFloat extends StatelessWidget {
     );
   }
 }
+

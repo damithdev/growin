@@ -1,169 +1,202 @@
 import 'package:flutter/material.dart';
-import 'package:growin/core/User.dart';
+import 'package:growin/core/GWidgets.dart';
+
+import 'core/User.dart';
 
 
+class Checkout extends StatefulWidget {
 
-class BuyPlant extends StatefulWidget {
-
-  final Garden garden;
   final User user;
-
-  const BuyPlant({Key key, this.garden, this.user}) : super(key: key);
-
+  final Garden garden;
 
 
+  Checkout(this.user, this.garden);
 
   @override
-  _BuyPlantState createState() => _BuyPlantState(garden,user);
+  _CheckoutState createState() => _CheckoutState(user,garden);
 }
 
-class _BuyPlantState extends State<BuyPlant> {
+class _CheckoutState extends State<Checkout> {
 
-  final Garden garden;
   final User user;
+  final Garden garden;
 
-  _BuyPlantState(this.garden, this.user);
+  List<bool> paymentType = [false,true];
+
+  _CheckoutState(this.user, this.garden);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        title: Text("Checkout",style: TextStyle(fontSize: 15),),
+        backgroundColor: Colors.white,
         elevation: 0,
-        centerTitle: false,
-        title: Text("Checkout",style: TextStyle(fontSize: 17),),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: ((){
-            Navigator.of(context).pop();
-          }),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.help_outline),
-            onPressed: ((){
-
-            }),
-          )
-        ],
+        leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
+          Navigator.of(context).pop();
+        },),
       ),
-      body:Stack(
-        children: <Widget>[
-          SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(left: 20,right: 20,top: 20,bottom: 30),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text("${garden.price}.00 LKR",style: TextStyle(fontSize: 27,fontWeight: FontWeight.w700),),
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text("Plant coins amount",style: TextStyle(color: Colors.grey[600],fontSize: 14),),
-                            SizedBox(height: 5,),
-                            Row(
-                              children: <Widget>[
-                                Text(garden.price.toString(),style: TextStyle(fontSize: 23,fontWeight: FontWeight.w700),),
-                                SizedBox(width: 5,),
-                                Image.asset("assets/images/coin.png",width: 20,)
-                              ],
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Divider(),
-                Container(
-                  padding: EdgeInsets.only(left: 20,right: 20,top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Plant",style: TextStyle(fontSize: 15,color: Colors.grey),),
-                      SizedBox(height: 20,),
-                      ListTile(
-                        contentPadding: EdgeInsets.all(0),
-                        title: Text(garden.plantName,style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w600),),
-                        subtitle: Row(
-                          children: <Widget>[
-                            Text("Life time",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
-                            SizedBox(width: 5,),
-                            Text("100 Days",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Color(0xff25CBA6)),)
-                          ],
-                        ),
-                        leading:  CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Color(0xffBBFADA),
-                          child: Image.asset("assets/images/leaf.png",width: 30,filterQuality: FilterQuality.high,),
-                        ),
-                      )
-                    ],
-                  ),
-
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  padding:EdgeInsets.only(left: 20,right: 20),
-                  child:Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Attention Please",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,color: Colors.black54),),
-                      SizedBox(height: 20,),
-                      Text("Please pay before 7 days from order place date.\nPayment Confirmation process take 2 business days.\nYou can't water your plant in Every week on Sunday",style: TextStyle(fontSize: 15,color: Colors.grey[500],fontWeight: FontWeight.w500))
-
-
-                    ],
-                  )
-                )
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              padding: EdgeInsets.only(left: 20,right: 20,top: 10,bottom: MediaQuery.of(context).padding.bottom+50),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(15),
+              color: Colors.white,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  RaisedButton(
-                    onPressed: ()=>{
-
-                    },
-                    color: Colors.blueGrey,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))
-                    ),
-                    child: Container(
-                      padding: EdgeInsets.all(18),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text("Pay by Bank",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: Colors.white),),
-                          Icon(Icons.arrow_forward,color: Colors.white,size: 30,)
-                        ],
-                      ),
+                  Expanded(
+                    child: Text("For Payment",style: TextStyle(fontSize: 18,color: Colors.black38),)
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text("${garden.plantName}",style: TextStyle(fontSize: 15,color: Colors.grey),),
+                        Text("Rs. ${garden.price}.00",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.w600),)
+                      ],
                     ),
                   )
                 ],
               ),
             ),
-          )
-        ]
+            Divider(),
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Center(
+                child: ToggleButtons(
+                  borderRadius: BorderRadius.circular(5),
+                  isSelected: paymentType,
+                  onPressed: (int){
+                    setState(() {
+                      if(int==0){
+                        paymentType[0] = true;
+                        paymentType[1] = false;
+                      }else{
+                        paymentType[1] = true;
+                        paymentType[0] = false;
+                      }
+
+                    });
+                  },
+                  constraints: BoxConstraints(
+                    minWidth: 0
+                  ),
+                  fillColor: Colors.blue,
+                  borderColor: Colors.blue[200],
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(left: 8,right: 8,top: 11,bottom: 11),
+                        child: Text("Online Payment",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: paymentType[0]?Colors.white:Colors.blue[200]),)),
+                    Container(
+                        padding: EdgeInsets.only(left: 8,right: 8,top: 11,bottom: 11),
+                        child: Text("Bank Payment",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: paymentType[1]?Colors.white:Colors.blue[200])),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            paymentType[0]?Container(
+              height: 200,
+              child: Center(
+                child: Text("Coming Soon",style: TextStyle(fontSize: 20,color: Colors.grey),),
+              ),
+            ):Container(
+              padding: EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("Bank Deposit/Transfer ",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.grey),),
+                  SizedBox(height: 25,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text("Bank Name ",style: TextStyle(fontSize: 14,color: Colors.grey),),
+                      ),
+                      Expanded(
+                        child: Text("Commerical Bank",style: TextStyle(fontSize: 14,color: Colors.black),),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text("Account Name ",style: TextStyle(fontSize: 14,color: Colors.grey),),
+                      ),
+                      Expanded(
+                        child: Text("A.Haniman",style: TextStyle(fontSize: 14,color: Colors.black),),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text("Account Number ",style: TextStyle(fontSize: 14,color: Colors.grey),),
+                      ),
+                      Expanded(
+                        child: Text("18974738758",style: TextStyle(fontSize: 14,color: Colors.black),),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text("Branch ",style: TextStyle(fontSize: 14,color: Colors.grey),),
+                      ),
+                      Expanded(
+                        child: Text("Wellwatha",style: TextStyle(fontSize: 14,color: Colors.black),),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text("Brach Code ",style: TextStyle(fontSize: 14,color: Colors.grey),),
+                      ),
+                      Expanded(
+                        child: Text("010",style: TextStyle(fontSize: 14,color: Colors.black),),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 30,),
+                  Text("Payment instruction",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.grey),),
+                  SizedBox(height: 25,),
+                  Text("Send your Bank slip or transaction screenshot to our email/WhatsApp/Viber with your payment PIN code",style: TextStyle(color: Colors.grey),),
+                  SizedBox(height: 10,)
+
+
+
+                ],
+              ),
+            ),
+            SizedBox(height: 20,),
+            Container(
+              padding: EdgeInsets.all(15),
+              child: PrimaryButton(
+                text: "Confirm Order",
+                onPress:paymentType[0]?null:(){
+
+                },
+
+              ),
+            )
+
+          ],
+        ),
       ),
+
     );
   }
 }

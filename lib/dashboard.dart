@@ -307,13 +307,16 @@ class _DashboardState extends State<Dashboard> {
               ],
             ),
           ),
-          Container(
-            child: DraggableScrollableSheet(
-              minChildSize: 0.2,
-              initialChildSize: 0.2,
-              builder: (context, scrollController) {
-                return scoreBoard(scrollController);
-              },
+          Visibility(
+            visible: true,
+            child: Container(
+              child: DraggableScrollableSheet(
+                minChildSize: 0.2,
+                initialChildSize: 0.2,
+                builder: (context, scrollController) {
+                  return scoreBoard(scrollController);
+                },
+              ),
             ),
           )
         ],
@@ -325,6 +328,8 @@ class _DashboardState extends State<Dashboard> {
     return SingleChildScrollView(
       controller: scorllControl,
       child: Container(
+        height: MediaQuery.of(context).size.height-(MediaQuery.of(context).padding.top+MediaQuery.of(context).padding.bottom),
+        margin: EdgeInsets.only(top: 15),
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -371,7 +376,7 @@ class _DashboardState extends State<Dashboard> {
                           children: <Widget>[
                             Image.asset("assets/images/coin.png",width: 40,),
                             SizedBox(width: 10,),
-                            Text("1004",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,),)
+                            Text("500",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,),)
                           ],
                         )
 
@@ -407,7 +412,6 @@ class _DashboardState extends State<Dashboard> {
             ),
             Divider(),
             Container(
-              height: 1000,
               padding: EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -424,13 +428,55 @@ class _DashboardState extends State<Dashboard> {
                         child: Text("View all",style: TextStyle(fontSize: 15,color: Color(0xff25CBA6)),),
                       )
                     ],
-                  )
+                  ),
+                  SizedBox(height: 15,),
+                  coinData(),
+
                 ],
               ),
-            )
+            ),
+
+
           ],
         ),
       ),
+    );
+  }
+
+
+  Widget coinData(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(bottom: 8,top: 8),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Image.asset("assets/images/coin.png",width: 20,),
+                    SizedBox(width: 5,),
+                    Text("500",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),)
+                  ],
+                ),
+                flex: 2,
+              ),
+              Expanded(
+                flex: 1,
+                child: Text("",style: TextStyle(fontSize: 15,color: Color(0xff25CBA6)),),
+              ),
+              Expanded(
+                flex: 1,
+                child: Text("a min ago",style: TextStyle(fontSize: 15,color: Colors.grey),textAlign: TextAlign.right,),
+              )
+            ],
+          ),
+        ),
+        Divider()
+      ],
     );
   }
 
@@ -478,7 +524,7 @@ class _DashboardState extends State<Dashboard> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text("24 days ",
+                              Text("1 days ",
                                   style: TextStyle(
                                       fontSize: 15, color: Color(0xff25CBA6))),
                               Text(
@@ -520,7 +566,7 @@ class _DashboardState extends State<Dashboard> {
                                         fontSize: 15, color: Colors.grey),
                                   ),
                                   Text(
-                                    "10%",
+                                    "0%",
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600),
@@ -547,26 +593,29 @@ class _DashboardState extends State<Dashboard> {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  padding:
-                      EdgeInsets.only(top: 8, bottom: 20, right: 20, left: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Icon(
-                        Icons.access_time,
-                        color: Colors.red,
-                        size: 17,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        "Waiting for payment approval",
-                        style: TextStyle(fontSize: 14, color: Colors.redAccent),
-                      )
-                    ],
+                Visibility(
+                  visible: false,
+                  child: Container(
+                    padding:
+                        EdgeInsets.only(top: 8, bottom: 20, right: 20, left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Icon(
+                          Icons.access_time,
+                          color: Colors.red,
+                          size: 17,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Waiting for payment approval",
+                          style: TextStyle(fontSize: 14, color: Colors.redAccent),
+                        )
+                      ],
+                    ),
                   ),
                 )
               ],
