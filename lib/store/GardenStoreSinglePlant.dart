@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:growin/buy_plant.dart';
-import 'package:growin/core/GWidgets.dart';
-import 'package:growin/core/User.dart';
+import 'package:growin/model/Garden.dart';
+import 'package:growin/store/GardenStoreCheckout.dart';
+import 'package:growin/util/CustomWidget.dart';
+import 'package:growin/model/User.dart';
 
 
-class PlantView extends StatefulWidget {
+class GardenStoreSinglePlant extends StatefulWidget {
 
   final Garden garden;
   final User user;
 
-  const PlantView({Key key, this.garden, this.user}) : super(key: key);
+  const GardenStoreSinglePlant({Key key, this.garden, this.user}) : super(key: key);
 
 
 
 
   @override
-  _PlantViewState createState() => _PlantViewState(garden,user);
+  _GardenStoreSinglePlantState createState() => _GardenStoreSinglePlantState(garden,user);
 }
 
-class _PlantViewState extends State<PlantView> {
+class _GardenStoreSinglePlantState extends State<GardenStoreSinglePlant> {
 
   final Garden garden;
   final User user;
 
-  _PlantViewState(this.garden, this.user);
+  _GardenStoreSinglePlantState(this.garden, this.user);
 
 
 
@@ -165,7 +166,7 @@ class _PlantViewState extends State<PlantView> {
                       child: PrimaryButton(
                         text: "Buy now",
                         onPress: ((){
-                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext bcontext)=>Checkout(user,garden)));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext bcontext)=>GardenStoreCheckout(user,garden)));
                         }),
                       ),
                     ),

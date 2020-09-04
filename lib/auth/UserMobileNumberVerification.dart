@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:growin/core/GrowinApi.dart';
-import 'package:growin/dashboard.dart';
+import 'package:growin/http/GrowinApi.dart';
+import 'package:growin/dashboard/UserDashboard.dart';
 import 'package:quiver/async.dart';
-import 'core/GWidgets.dart';
-import 'core/PColors.dart';
-import 'core/User.dart';
+import '../util/CustomWidget.dart';
+import '../util/DefaultColorScheme.dart';
+import '../model/User.dart';
 
 
-class EmailVerify extends StatefulWidget {
+class UserMobileNumberVerification extends StatefulWidget {
   final User user;
 
-  const EmailVerify({Key key, this.user}) : super(key: key);
+  const UserMobileNumberVerification({Key key, this.user}) : super(key: key);
 
 
 
 
   @override
-  _EmailVerifyState createState() => _EmailVerifyState(user);
+  _UserMobileNumberVerificationState createState() => _UserMobileNumberVerificationState(user);
 }
 
-class _EmailVerifyState extends State<EmailVerify> {
+class _UserMobileNumberVerificationState extends State<UserMobileNumberVerification> {
 
   final User user;
 
@@ -32,7 +32,7 @@ class _EmailVerifyState extends State<EmailVerify> {
   bool resend = false;
 
 
-  _EmailVerifyState(this.user);
+  _UserMobileNumberVerificationState(this.user);
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
 
@@ -58,7 +58,7 @@ class _EmailVerifyState extends State<EmailVerify> {
       loader=true;
     });
 
-    bool isSend = await GrowinAPI().sendOtp();
+    bool isSend = await GrowinApi().sendOtp();
     setState(() {
       loader=false;
     });
@@ -78,14 +78,14 @@ class _EmailVerifyState extends State<EmailVerify> {
       btnLoader=true;
     });
 
-    bool isSend = await GrowinAPI().verifyOtp(_otp);
+    bool isSend = await GrowinApi().verifyOtp(_otp);
     setState(() {
       btnLoader=false;
     });
     if(isSend){
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => Dashboard(user: user,)),
+        MaterialPageRoute(builder: (context) => UserDashBoard(user: user,)),
             (Route<dynamic> route) => false,
       );
 
@@ -117,7 +117,7 @@ class _EmailVerifyState extends State<EmailVerify> {
           height: 30,
           child: CircularProgressIndicator(
             strokeWidth: 2,
-            valueColor: AlwaysStoppedAnimation(PColor.primaryColor),
+            valueColor: AlwaysStoppedAnimation(DefaultColorScheme.primaryColor),
 
           ),
         ),
@@ -165,7 +165,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                           ),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: PColor.primaryColor
+                                  color: DefaultColorScheme.primaryColor
                               )
                           ),
                           border: UnderlineInputBorder(
@@ -186,7 +186,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                             onTap: ()=>{
                               otpSender()
                             },
-                            child: Text("Resend OTP",style: TextStyle(color: PColor.primaryColor,fontSize: 15,fontWeight: FontWeight.w600),),
+                            child: Text("Resend OTP",style: TextStyle(color: DefaultColorScheme.primaryColor,fontSize: 15,fontWeight: FontWeight.w600),),
                           )
                         ],
                       ),

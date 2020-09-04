@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:growin/core/GWidgets.dart';
-import 'package:growin/core/PColors.dart';
-import 'package:growin/dashboard.dart';
-import 'package:growin/email_verify.dart';
-import 'package:growin/signup.dart';
+import 'package:growin/util/CustomWidget.dart';
+import 'package:growin/util/DefaultColorScheme.dart';
+import 'package:growin/dashboard/UserDashboard.dart';
+import 'package:growin/auth/UserMobileNumberVerification.dart';
+import 'package:growin/signup/UserSignUp.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'core/GrowinApi.dart';
-import 'core/User.dart';
+import '../http/GrowinApi.dart';
+import '../model/User.dart';
 
-class Signin extends StatefulWidget {
+class UserSignIn extends StatefulWidget {
   @override
-  _SigninState createState() => _SigninState();
+  _UserSignInState createState() => _UserSignInState();
 }
 
-class _SigninState extends State<Signin> {
+class _UserSignInState extends State<UserSignIn> {
 
 
   String _email = "";
@@ -29,7 +29,7 @@ class _SigninState extends State<Signin> {
       btnLoader=true;
     });
     User user = User();
-    user = await GrowinAPI().signIn(User(
+    user = await GrowinApi().signIn(User(
         email: _email,
         password: _password,
     ));
@@ -40,11 +40,11 @@ class _SigninState extends State<Signin> {
       if(user.isNumberVerified){
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => Dashboard(user: user)),
+          MaterialPageRoute(builder: (context) => UserDashBoard(user: user)),
               (Route<dynamic> route) => false,
         );
       }else{
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>EmailVerify(user: user)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>UserMobileNumberVerification(user: user)));
       }
 
     }else{
@@ -100,9 +100,9 @@ class _SigninState extends State<Signin> {
                           Text("I don't have an account. ",style: TextStyle(fontSize: 16,color: Colors.grey[500]),),
                           InkWell(
                             onTap: ()=>{
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>Signup()))
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>UserSignUp()))
                             },
-                            child: Text("Create Account",style: TextStyle(color: PColor.primaryColor,fontSize: 16,fontWeight: FontWeight.w600),),
+                            child: Text("Create Account",style: TextStyle(color: DefaultColorScheme.primaryColor,fontSize: 16,fontWeight: FontWeight.w600),),
                           )
                         ],
                       ),
@@ -139,7 +139,7 @@ class _SigninState extends State<Signin> {
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: PColor.primaryColor
+                              color: DefaultColorScheme.primaryColor
                             )
                           ),
                           border: UnderlineInputBorder(
@@ -175,7 +175,7 @@ class _SigninState extends State<Signin> {
                           ),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: PColor.primaryColor
+                                  color: DefaultColorScheme.primaryColor
                               )
                           ),
                           border: UnderlineInputBorder(
@@ -196,7 +196,7 @@ class _SigninState extends State<Signin> {
                             onTap: ()=>{
 
                             },
-                            child: Text("Reset Password",style: TextStyle(color: PColor.primaryColor,fontSize: 15,fontWeight: FontWeight.w600),),
+                            child: Text("Reset Password",style: TextStyle(color: DefaultColorScheme.primaryColor,fontSize: 15,fontWeight: FontWeight.w600),),
                           )
                         ],
                       ),

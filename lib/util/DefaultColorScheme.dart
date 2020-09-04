@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
 
-class PColor{
+class DefaultColorScheme{
   static Color primaryColor = Color(0xff25CBA6);
 }

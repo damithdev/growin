@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CheckOutDone extends StatelessWidget {
+class GardenStoreCheckoutComplete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

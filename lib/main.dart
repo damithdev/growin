@@ -3,17 +3,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:growin/Splashscreen.dart';
-import 'package:growin/core/PColors.dart';
+import 'package:growin/SplashScreen.dart';
+import 'package:growin/util/DefaultColorScheme.dart';
 
 
 void main(){
-  runApp(Growin());
+  runApp(GrowIn());
 }
 
 
 
-class Growin extends StatelessWidget {
+class GrowIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -26,13 +26,13 @@ class Growin extends StatelessWidget {
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
     return MaterialApp(
-      title: "Growin",
+      title: "GrowIn",
       theme: ThemeData(
         textTheme: GoogleFonts.montserratTextTheme(
           Theme.of(context).textTheme,
         ),
-        accentColor: PColor.primaryColor,
-        primaryColor: PColor.primaryColor
+        accentColor: DefaultColorScheme.primaryColor,
+        primaryColor: DefaultColorScheme.primaryColor
       ),
       debugShowCheckedModeBanner: false,
       home:SplashScreen(),

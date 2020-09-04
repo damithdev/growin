@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:growin/core/GrowinApi.dart';
-import 'package:growin/core/User.dart';
-import 'package:growin/getstart.dart';
-import 'package:growin/onBoard.dart';
+import 'package:growin/http/GrowinApi.dart';
+import 'package:growin/model/User.dart';
+import 'package:growin/UserGetStarted.dart';
+import 'package:growin/OnBoardView.dart';
 
-import 'core/PColors.dart';
-import 'dashboard.dart';
-import 'email_verify.dart';
+import 'util/DefaultColorScheme.dart';
+import 'dashboard/UserDashboard.dart';
+import 'auth/UserMobileNumberVerification.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
   fetch() async{
-    User user = await GrowinAPI().user();
+    User user = await GrowinApi().user();
 //    if(user.createdIn!=null){
 //      if(user.isEmailVerified){
 //        Navigator.pushAndRemoveUntil(
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
 //          builder: (BuildContext context) => OnBoard()));
 //    }
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (BuildContext context) => OnBoard()));
+        builder: (BuildContext context) => OnBoardView()));
   }
 
   @override
@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 20,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation(PColor.primaryColor),
+                valueColor: AlwaysStoppedAnimation(DefaultColorScheme.primaryColor),
 
               ),
             )

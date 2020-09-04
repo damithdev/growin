@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:growin/core/GrowinApi.dart';
-import 'package:growin/core/User.dart';
-import 'package:growin/plantView.dart';
+import 'package:growin/http/GrowinApi.dart';
+import 'package:growin/model/Garden.dart';
+import 'package:growin/model/User.dart';
+import 'package:growin/store/GardenStoreSinglePlant.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Store extends StatefulWidget {
+class GardenStore extends StatefulWidget {
   final User user;
 
-  const Store({Key key, this.user}) : super(key: key);
+  const GardenStore({Key key, this.user}) : super(key: key);
 
   @override
-  _StoreState createState() => _StoreState(user);
+  _GardenStoreState createState() => _GardenStoreState(user);
 }
 
-class _StoreState extends State<Store> {
+class _GardenStoreState extends State<GardenStore> {
 
   final User user;
 
@@ -25,10 +26,10 @@ class _StoreState extends State<Store> {
   bool loader =true;
   List<Garden> gardenList = [];
 
-  _StoreState(this.user);
+  _GardenStoreState(this.user);
 
   void _onRefresh() async{
-    List<Garden> glist = await GrowinAPI().getGarden();
+    List<Garden> glist = await GrowinApi().getGarden();
     _refreshController.refreshCompleted();
 
     if(glist!=null){
@@ -44,7 +45,7 @@ class _StoreState extends State<Store> {
 
   void _onLoading() async{
 
-    List<Garden> glist = await GrowinAPI().getGarden();
+    List<Garden> glist = await GrowinApi().getGarden();
     if(glist!=null){
       setState(() {
         gardenList = glist;
@@ -61,7 +62,7 @@ class _StoreState extends State<Store> {
     setState(() {
       loader=true;
     });
-    List<Garden> glist = await GrowinAPI().getGarden();
+    List<Garden> glist = await GrowinApi().getGarden();
     setState(() {
       loader=false;
     });
@@ -190,7 +191,7 @@ class _StoreState extends State<Store> {
             child: RaisedButton(
               elevation: 0,
               onPressed: ((){
-                Navigator.push(context,MaterialPageRoute(builder: (BuildContext context)=>PlantView(garden: garden,user:user)));
+                Navigator.push(context,MaterialPageRoute(builder: (BuildContext context)=>GardenStoreSinglePlant(garden: garden,user:user)));
               }),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               padding: EdgeInsets.all(0.0),

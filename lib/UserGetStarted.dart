@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:growin/core/GWidgets.dart';
-import 'package:growin/core/PColors.dart';
-import 'package:growin/signin.dart';
-import 'package:growin/signup.dart';
+import 'package:growin/util/CustomWidget.dart';
+import 'package:growin/util/DefaultColorScheme.dart';
+import 'package:growin/auth/UserSignIn.dart';
+import 'package:growin/signup/UserSignUp.dart';
 
-class GetStart extends StatefulWidget {
+class UserGetStarted extends StatefulWidget {
   @override
-  _GetStartState createState() => _GetStartState();
+  _UserGetStartedState createState() => _UserGetStartedState();
 }
 
-class _GetStartState extends State<GetStart> {
+class _UserGetStartedState extends State<UserGetStarted> {
   @override
   Widget build(BuildContext context) {
 
@@ -22,7 +22,7 @@ class _GetStartState extends State<GetStart> {
           children: <Widget>[
             Align(
               alignment: Alignment.bottomCenter,
-                child: Image.asset("assets/images/sback.png",alignment: Alignment.bottomCenter,)
+                child: Image.asset("assets/images/sback.png",alignment: Alignment.bottomCenter,width: double.infinity,fit: BoxFit.cover,)
             ),
             Align(
               alignment: Alignment.topCenter,
@@ -34,9 +34,9 @@ class _GetStartState extends State<GetStart> {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: FlatButton(
-                        child: Text("SIGN IN",style: TextStyle(color: PColor.primaryColor,fontSize: 15),),
+                        child: Text("SIGN IN",style: TextStyle(color: DefaultColorScheme.primaryColor,fontSize: 15),),
                         onPressed: ()=>{
-                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Signin()))
+                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>UserSignIn()))
 
                         },
                       ),
@@ -54,7 +54,7 @@ class _GetStartState extends State<GetStart> {
                 child:PrimaryButton(
                   text: "GET STARTED",
                   onPress: ((){
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>new Signup()));
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>new UserSignUp()));
                   }),
                 )
               ),

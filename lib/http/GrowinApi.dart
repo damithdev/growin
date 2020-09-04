@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:growin/core/User.dart';
+import 'package:growin/model/Garden.dart';
+import 'package:growin/model/User.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class GrowinAPI{
+class GrowinApi{
 //  final String _host = "https://growin.api.foxrilla.com";
   final String _host = "http://localhost:3000";
 

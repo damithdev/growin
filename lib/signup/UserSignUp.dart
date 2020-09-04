@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:growin/core/GrowinApi.dart';
-import 'package:growin/core/country.dart';
-import 'package:growin/signin.dart';
+import 'package:growin/http/GrowinApi.dart';
+import 'package:growin/model/UserAddress.dart';
+import 'package:growin/signup/CountrySelector.dart';
+import 'package:growin/auth/UserSignIn.dart';
 import 'package:http/http.dart';
-import 'core/GWidgets.dart';
-import 'core/PColors.dart';
-import 'core/User.dart';
-import 'dashboard.dart';
-import 'email_verify.dart';
+import '../util/CustomWidget.dart';
+import '../util/DefaultColorScheme.dart';
+import '../model/User.dart';
+import '../dashboard/UserDashboard.dart';
+import '../auth/UserMobileNumberVerification.dart';
 
 
-class Signup extends StatefulWidget {
+class UserSignUp extends StatefulWidget {
   @override
-  _SignupState createState() => _SignupState();
+  _UserSignUpState createState() => _UserSignUpState();
 }
 
-class _SignupState extends State<Signup> {
+class _UserSignUpState extends State<UserSignUp> {
 
 
   String country = "";
@@ -55,12 +56,12 @@ class _SignupState extends State<Signup> {
       loader=true;
     });
     User user = User();
-    user = await GrowinAPI().signUp(User(
+    user = await GrowinApi().signUp(User(
       firstName: firstName,
       lastName: lastName,
       email: email,
       password: password,
-      address: userAddress(country: countryCode),
+      address: UserAddress(country: countryCode),
       mobileNumber: '$country_no$mobileNumber'
     ));
     setState(() {
@@ -70,11 +71,11 @@ class _SignupState extends State<Signup> {
       if(user.isNumberVerified){
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => Dashboard(user: user)),
+          MaterialPageRoute(builder: (context) => UserDashBoard(user: user)),
               (Route<dynamic> route) => false,
         );
       }else{
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>EmailVerify(user: user)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>UserMobileNumberVerification(user: user)));
       }
     }else{
       print(user.toString());
@@ -144,10 +145,10 @@ class _SignupState extends State<Signup> {
                           Text("I already have an account. ",style: TextStyle(fontSize: 16,color: Colors.grey[500]),),
                           InkWell(
                             onTap: ()=>{
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>Signin()))
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext coontext)=>UserSignIn()))
 
                             },
-                            child: Text("Sign in",style: TextStyle(color: PColor.primaryColor,fontSize: 16,fontWeight: FontWeight.w600),),
+                            child: Text("Sign in",style: TextStyle(color: DefaultColorScheme.primaryColor,fontSize: 16,fontWeight: FontWeight.w600),),
                           )
                         ],
                       ),
@@ -168,7 +169,7 @@ class _SignupState extends State<Signup> {
                           ),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: PColor.primaryColor
+                                  color: DefaultColorScheme.primaryColor
                               )
                           ),
                           border: UnderlineInputBorder(
@@ -196,7 +197,7 @@ class _SignupState extends State<Signup> {
                           ),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: PColor.primaryColor
+                                  color: DefaultColorScheme.primaryColor
                               )
                           ),
                           border: UnderlineInputBorder(
@@ -241,7 +242,7 @@ class _SignupState extends State<Signup> {
                           ),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: PColor.primaryColor
+                                  color: DefaultColorScheme.primaryColor
                               )
                           ),
                           border: UnderlineInputBorder(
@@ -267,7 +268,7 @@ class _SignupState extends State<Signup> {
                           ),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: PColor.primaryColor
+                                  color: DefaultColorScheme.primaryColor
                               )
                           ),
                           border: UnderlineInputBorder(
@@ -298,7 +299,7 @@ class _SignupState extends State<Signup> {
                           ),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: PColor.primaryColor
+                                  color: DefaultColorScheme.primaryColor
                               )
                           ),
                           border: UnderlineInputBorder(
@@ -337,7 +338,7 @@ class _SignupState extends State<Signup> {
                           ),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: PColor.primaryColor
+                                  color: DefaultColorScheme.primaryColor
                               )
                           ),
                           border: UnderlineInputBorder(
@@ -358,7 +359,7 @@ class _SignupState extends State<Signup> {
                             onTap: ()=>{
 
                             },
-                            child: Text("Terms and condtions",style: TextStyle(color: PColor.primaryColor,fontSize: 15,fontWeight: FontWeight.w600),),
+                            child: Text("Terms and condtions",style: TextStyle(color: DefaultColorScheme.primaryColor,fontSize: 15,fontWeight: FontWeight.w600),),
                           )
                         ],
                       ),
@@ -395,7 +396,7 @@ class _SignupState extends State<Signup> {
 
   void goToSecondScreen()async {
     var result = await Navigator.push(context, new MaterialPageRoute(
-      builder: (BuildContext context) => new Country())
+      builder: (BuildContext context) => new CountrySelector())
     );
     if(result!=null){
       setState(() {

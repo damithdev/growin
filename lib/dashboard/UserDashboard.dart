@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:growin/core/GWidgets.dart';
-import 'package:growin/core/User.dart';
-import 'package:growin/store.dart';
+import 'package:growin/UserGetStarted.dart';
+import 'package:growin/http/GrowinApi.dart';
+import 'package:growin/util/CustomWidget.dart';
+import 'package:growin/model/User.dart';
+import 'package:growin/store/GardenStore.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'core/GrowinApi.dart';
 
-class Dashboard extends StatefulWidget {
+class UserDashBoard extends StatefulWidget {
   final User user;
 
-  const Dashboard({Key key, this.user}) : super(key: key);
+  const UserDashBoard({Key key, this.user}) : super(key: key);
 
   @override
-  _DashboardState createState() => _DashboardState(user);
+  _UserDashBoardState createState() => _UserDashBoardState(user);
 }
 
-class _DashboardState extends State<Dashboard> {
+class _UserDashBoardState extends State<UserDashBoard> {
   User user;
 
-  _DashboardState(this.user);
+  _UserDashBoardState(this.user);
 
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -43,23 +42,28 @@ class _DashboardState extends State<Dashboard> {
   }
 
   void _onRefresh() async {
-    User userx = await GrowinAPI().user();
+    User userx = await GrowinApi().user();
     _refreshController.refreshCompleted();
 
     if (userx.createdIn != null) {
       setState(() {
         user = userx;
       });
-    } else {}
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) => UserGetStarted()));
+    }
   }
 
   void _onLoading() async {
-    User userx = await GrowinAPI().user();
+    User userx = await GrowinApi().user();
     if (userx.createdIn != null) {
       setState(() {
         user = userx;
       });
-    } else {}
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => UserGetStarted()));
+    }
     _refreshController.refreshCompleted();
   }
 
@@ -276,17 +280,17 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       Visibility(
                         child: notPlant(),
-                        visible: false,
+                        visible: true,
                       ),
                       Visibility(
                         child: plantView(),
-                        visible: true,
+                        visible: false,
                       )
                     ],
                   ),
                 ),
                 Visibility(
-                  visible: false,
+                  visible: true,
                   child: Padding(
                     padding: EdgeInsets.only(
                         left: 20,
@@ -298,7 +302,7 @@ class _DashboardState extends State<Dashboard> {
                         text: "Buy a Plant",
                         onPress: (() => {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (BuildContext context) => Store()))
+                                  builder: (BuildContext context) => GardenStore()))
                             }),
                       ),
                     ),
@@ -308,7 +312,7 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           Visibility(
-            visible: true,
+            visible: false,
             child: Container(
               child: DraggableScrollableSheet(
                 minChildSize: 0.2,

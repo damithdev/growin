@@ -1,15 +1,15 @@
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'country_data.dart';
+import '../http/CountryList.dart';
 
 
-class Country extends StatefulWidget {
+class CountrySelector extends StatefulWidget {
   @override
-  _CountryState createState() => _CountryState();
+  _CountrySelectorState createState() => _CountrySelectorState();
 }
 
-class _CountryState extends State<Country> {
+class _CountrySelectorState extends State<CountrySelector> {
 
 
   List<Map> _cList;
